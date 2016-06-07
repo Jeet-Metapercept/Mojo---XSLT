@@ -536,7 +536,7 @@ See the accompanying license.txt file for applicable licenses.
                 </fo:block>
               </xsl:when>
                 <xsl:when test="$type = 'part'">
-                        <fo:block xsl:use-attribute-sets="__chapter__frontmatter__name__container">
+                        <fo:block text-align="center" xsl:use-attribute-sets="__chapter__frontmatter__name__container">
                             <xsl:call-template name="insertVariable">
                                 <xsl:with-param name="theVariableID" select="'Part with number'"/>
                                 <xsl:with-param name="theParameters">
@@ -761,11 +761,11 @@ See the accompanying license.txt file for applicable licenses.
         <fo:block xsl:use-attribute-sets="fig.title">
           <xsl:call-template name="commonattributes"/>
           <!-- OXYGEN PATCH START  EXM-18109 -->
-          <xsl:if test="following-sibling::*[contains(@class,' topic/image ')][@placement='break']">
+          <!--<xsl:if test="following-sibling::*[contains(@class,' topic/image ')][@placement='break']">
               <xsl:attribute name="text-align" 
                   select="if (empty(following-sibling::*[contains(@class,' topic/image ')]/@align)) then 'center' 
                               else following-sibling::*[contains(@class,' topic/image ')]/@align"/>
-          </xsl:if>
+          </xsl:if>-->
           <!-- OXYGEN PATCH END  EXM-18109 -->
           
             <xsl:call-template name="insertVariable">

@@ -133,7 +133,7 @@ See the accompanying license.txt file for applicable licenses.
                     <!-- cover image -->
                     <fo:block-container xsl:use-attribute-sets="__coverImage">
                         <fo:block>
-                            <fo:external-graphic src="url(Customization/OpenTopic/common/artwork/mojo-networks-logo.png)" tooltip="the alternate description for the image"/>
+                            <fo:external-graphic src="url(Customization/OpenTopic/common/artwork/Cover_image_4.png)" tooltip="Mojo Networks"/>
                         </fo:block>                      
                     </fo:block-container>
                     <!--/-->
