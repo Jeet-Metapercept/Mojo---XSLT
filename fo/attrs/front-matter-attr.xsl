@@ -37,13 +37,22 @@ See the accompanying license.txt file for applicable licenses.
 
 <!-- Custom attributes -->
 
-    <xsl:attribute-set name="__coverImage">
+    <!--for logo    <xsl:attribute-set name="__coverImage">
         <xsl:attribute name="text-align">left</xsl:attribute>
         <xsl:attribute name="space-before">30mm</xsl:attribute>
         <xsl:attribute name="space-before.conditionality">retain</xsl:attribute>
+        <!-\-<xsl:attribute name="border">solid grey</xsl:attribute>-\->
+    </xsl:attribute-set>-->
+
+<!-- for cover image--> <xsl:attribute-set name="__coverImage">
+        <xsl:attribute name="position">absolute</xsl:attribute>
+        <xsl:attribute name="top">-3.2cm</xsl:attribute>
+        <!--<xsl:attribute name="right">10cm</xsl:attribute>-->
+        <xsl:attribute name="text-align">center</xsl:attribute>
+        <!--<xsl:attribute name="space-before">30mm</xsl:attribute>-->
+        <!--<xsl:attribute name="space-before.conditionality">retain</xsl:attribute>-->
         <!--<xsl:attribute name="border">solid grey</xsl:attribute>-->
     </xsl:attribute-set>
-
 <!-- end -->
     <xsl:attribute-set name="__frontmatter">
         <xsl:attribute name="text-align">left</xsl:attribute>
@@ -51,10 +60,11 @@ See the accompanying license.txt file for applicable licenses.
 
     <xsl:attribute-set name="__frontmatter__title">
                 <xsl:attribute name="font-family">FontMojo</xsl:attribute>
-                <xsl:attribute name="space-before">40mm</xsl:attribute>
+               <!-- <xsl:attribute name="space-before">40mm</xsl:attribute>-->
                 <xsl:attribute name="color">#595959</xsl:attribute>
                 <xsl:attribute name="space-before.conditionality">retain</xsl:attribute>
                 <xsl:attribute name="font-size">22pt</xsl:attribute>
+        <xsl:attribute name="space-before">13cm+1cm</xsl:attribute>
         <!--<xsl:attribute name="font-weight">bold</xsl:attribute>-->
         <xsl:attribute name="line-height">140%</xsl:attribute>
     </xsl:attribute-set>

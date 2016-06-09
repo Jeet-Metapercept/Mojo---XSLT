@@ -179,12 +179,15 @@ See the accompanying license.txt file for applicable licenses.
 
   <xsl:attribute-set name="dl">
     <!--DL is a table-->
+    <xsl:attribute name="table-layout">auto</xsl:attribute>
+
     <xsl:attribute name="width">100%</xsl:attribute>
     <xsl:attribute name="space-before">5pt</xsl:attribute>
     <xsl:attribute name="space-after">5pt</xsl:attribute>
   </xsl:attribute-set>
 
   <xsl:attribute-set name="dl__body">
+    <xsl:attribute name="width">100%</xsl:attribute>
   </xsl:attribute-set>
 
   <xsl:attribute-set name="dl.dlhead">
@@ -194,6 +197,7 @@ See the accompanying license.txt file for applicable licenses.
   </xsl:attribute-set>
 
   <xsl:attribute-set name="dlentry.dt">
+    <xsl:attribute name="width">65px</xsl:attribute>
     <xsl:attribute name="relative-align">baseline</xsl:attribute>
   </xsl:attribute-set>
 
