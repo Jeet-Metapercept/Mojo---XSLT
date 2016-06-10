@@ -37,6 +37,7 @@ See the accompanying license.txt file for applicable licenses.
 
 <!-- Custom Attributes -->
   <xsl:attribute-set name="__body__first__footer__block">
+        <!--<xsl:attribute name="space-before">5cm</xsl:attribute>-->
     <xsl:attribute name="border-top-style">solid</xsl:attribute>
     <xsl:attribute name="border-top-width">3pt</xsl:attribute>
     <xsl:attribute name="border-color">#7E7E7E</xsl:attribute>

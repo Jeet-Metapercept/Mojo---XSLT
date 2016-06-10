@@ -368,6 +368,7 @@ See the accompanying license.txt file for applicable licenses.
     </xsl:attribute-set>
 
     <xsl:attribute-set name="q">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
         <xsl:attribute name="border-left-width">0pt</xsl:attribute>
         <xsl:attribute name="border-right-width">0pt</xsl:attribute>
     </xsl:attribute-set>
@@ -378,9 +379,11 @@ See the accompanying license.txt file for applicable licenses.
     </xsl:attribute-set>
 
     <xsl:attribute-set name="note" use-attribute-sets="common.block">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="note__table" use-attribute-sets="common.block">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="note__image__column">
@@ -398,11 +401,13 @@ See the accompanying license.txt file for applicable licenses.
     </xsl:attribute-set>
 
     <xsl:attribute-set name="note__text__entry">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
         <xsl:attribute name="font-style">italic</xsl:attribute>
         <xsl:attribute name="start-indent">0pt</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="note__label">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
         <xsl:attribute name="border-left-width">0pt</xsl:attribute>
         <xsl:attribute name="border-right-width">0pt</xsl:attribute>
         <!--<xsl:attribute name="font-weight">bold</xsl:attribute>-->
@@ -416,15 +421,19 @@ See the accompanying license.txt file for applicable licenses.
     </xsl:attribute-set>
 
     <xsl:attribute-set name="note__label__notice">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>      
     </xsl:attribute-set>
 
     <xsl:attribute-set name="note__label__tip">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="note__label__fastpath">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="note__label__restriction">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="note__label__important">
@@ -433,9 +442,11 @@ See the accompanying license.txt file for applicable licenses.
     </xsl:attribute-set>
 
     <xsl:attribute-set name="note__label__remember">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="note__label__attention">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="note__label__caution">
