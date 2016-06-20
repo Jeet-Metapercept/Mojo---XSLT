@@ -88,7 +88,7 @@ See the accompanying license.txt file for applicable licenses.
   </xsl:attribute-set>
   
   <xsl:attribute-set name="pagenum">
-    <xsl:attribute name="font-weight">bold</xsl:attribute>
+    <!--<xsl:attribute name="font-weight">bold</xsl:attribute>-->
     <xsl:attribute name="font-family">FontMojo</xsl:attribute>
     <xsl:attribute name="color">#4F81BD</xsl:attribute>
       </xsl:attribute-set>

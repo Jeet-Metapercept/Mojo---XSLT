@@ -242,6 +242,8 @@ See the accompanying license.txt file for applicable licenses.
     </xsl:attribute-set>
 
     <xsl:attribute-set name="fig">
+        <xsl:attribute name="space-before">10pt</xsl:attribute>
+        
     </xsl:attribute-set>
 
     <xsl:attribute-set name="fig.title" use-attribute-sets="base-font common.title">
@@ -255,9 +257,11 @@ See the accompanying license.txt file for applicable licenses.
     </xsl:attribute-set>
 
     <xsl:attribute-set name="topic" use-attribute-sets="base-font">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="titlealts" use-attribute-sets="common.border">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
         <xsl:attribute name="background-color">#f0f0d0</xsl:attribute>
     </xsl:attribute-set>
 
@@ -280,22 +284,27 @@ See the accompanying license.txt file for applicable licenses.
     </xsl:attribute-set>
 
     <xsl:attribute-set name="body__toplevel" use-attribute-sets="base-font">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
         <xsl:attribute name="start-indent"><xsl:value-of select="$side-col-width"/></xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="body__secondLevel" use-attribute-sets="base-font">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
         <xsl:attribute name="start-indent"><xsl:value-of select="$side-col-width"/></xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="body" use-attribute-sets="base-font">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
         <xsl:attribute name="start-indent"><xsl:value-of select="$side-col-width"/></xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="abstract" use-attribute-sets="body">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
                     <xsl:attribute name="font-family">FontMojo</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="shortdesc">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="topic__shortdesc" use-attribute-sets="body">
@@ -303,28 +312,36 @@ See the accompanying license.txt file for applicable licenses.
     </xsl:attribute-set>
 
     <xsl:attribute-set name="section" use-attribute-sets="base-font">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
         <xsl:attribute name="line-height"><xsl:value-of select="$default-line-height"/></xsl:attribute>
         <xsl:attribute name="space-before">0.6em</xsl:attribute>
     </xsl:attribute-set>
+    
     <xsl:attribute-set name="section__content">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="example" use-attribute-sets="base-font">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
         <xsl:attribute name="line-height"><xsl:value-of select="$default-line-height"/></xsl:attribute>
         <xsl:attribute name="space-before">0.6em</xsl:attribute>
         <xsl:attribute name="start-indent">36pt + from-parent(start-indent)</xsl:attribute>
         <xsl:attribute name="end-indent">36pt</xsl:attribute>
         <xsl:attribute name="padding">5pt</xsl:attribute>
     </xsl:attribute-set>
+    
     <xsl:attribute-set name="example__content">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="desc">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
         <xsl:attribute name="border-left-width">0pt</xsl:attribute>
         <xsl:attribute name="border-right-width">0pt</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="prolog" use-attribute-sets="base-font">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
         <xsl:attribute name="start-indent">72pt</xsl:attribute>
     </xsl:attribute-set>
 
@@ -334,6 +351,7 @@ See the accompanying license.txt file for applicable licenses.
     </xsl:attribute-set>
 
     <xsl:attribute-set name="lq" use-attribute-sets="base-font common.border">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
         <xsl:attribute name="space-before">10pt</xsl:attribute>
         <xsl:attribute name="padding-left">6pt</xsl:attribute>
         <xsl:attribute name="start-indent">92pt</xsl:attribute>
@@ -342,6 +360,7 @@ See the accompanying license.txt file for applicable licenses.
     </xsl:attribute-set>
 
     <xsl:attribute-set name="lq_simple" use-attribute-sets="base-font common.border">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
         <xsl:attribute name="space-before">10pt</xsl:attribute>
         <xsl:attribute name="space-after">10pt</xsl:attribute>
         <xsl:attribute name="padding-left">6pt</xsl:attribute>
@@ -388,7 +407,7 @@ See the accompanying license.txt file for applicable licenses.
 
     <xsl:attribute-set name="note__image__column">
         <xsl:attribute name="column-number">1</xsl:attribute>
-        <xsl:attribute name="column-width">32pt</xsl:attribute>
+        <xsl:attribute name="column-width">22pt</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="note__text__column">
@@ -396,7 +415,7 @@ See the accompanying license.txt file for applicable licenses.
     </xsl:attribute-set>
 
     <xsl:attribute-set name="note__image__entry">
-        <xsl:attribute name="padding-right">5pt</xsl:attribute>
+        <!--<xsl:attribute name="padding-right">5pt</xsl:attribute>-->
         <xsl:attribute name="start-indent">0pt</xsl:attribute>
     </xsl:attribute-set>
 
@@ -514,43 +533,52 @@ See the accompanying license.txt file for applicable licenses.
     </xsl:attribute-set>
 
     <xsl:attribute-set name="keyword">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
         <xsl:attribute name="border-left-width">0pt</xsl:attribute>
         <xsl:attribute name="border-right-width">0pt</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="term">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
         <xsl:attribute name="border-left-width">0pt</xsl:attribute>
         <xsl:attribute name="border-right-width">0pt</xsl:attribute>
         <xsl:attribute name="font-style">italic</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="ph">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
         <xsl:attribute name="border-left-width">0pt</xsl:attribute>
         <xsl:attribute name="border-right-width">0pt</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="boolean">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
         <xsl:attribute name="border-left-width">0pt</xsl:attribute>
         <xsl:attribute name="border-right-width">0pt</xsl:attribute>
         <xsl:attribute name="color">green</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="state">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
         <xsl:attribute name="border-left-width">0pt</xsl:attribute>
         <xsl:attribute name="border-right-width">0pt</xsl:attribute>
         <xsl:attribute name="color">red</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="alt">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="object">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="param">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="draft-comment" use-attribute-sets="common.border">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
         <xsl:attribute name="background-color">#FF99FF</xsl:attribute>
         <xsl:attribute name="color">#CC3333</xsl:attribute>
     </xsl:attribute-set>
@@ -584,12 +612,14 @@ See the accompanying license.txt file for applicable licenses.
     </xsl:attribute-set>
 
     <xsl:attribute-set name="fn__callout">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
         <xsl:attribute name="keep-with-previous.within-line">always</xsl:attribute>
         <xsl:attribute name="baseline-shift">super</xsl:attribute>
         <xsl:attribute name="font-size">75%</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="fn__body" use-attribute-sets="base-font">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
         <xsl:attribute name="provisional-distance-between-starts">8mm</xsl:attribute>
         <xsl:attribute name="provisional-label-separation">2mm</xsl:attribute>
         <xsl:attribute name="line-height">1.2</xsl:attribute>
@@ -617,29 +647,37 @@ See the accompanying license.txt file for applicable licenses.
     </xsl:attribute-set>
 
     <xsl:attribute-set name="indextermref">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
         <xsl:attribute name="font-style">italic</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="cite">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
         <xsl:attribute name="font-style">italic</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="concept">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="conbody" use-attribute-sets="body">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="topichead">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="topicgroup">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="topicmeta">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="searchtitle">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="searchtitle__label">
@@ -649,84 +687,111 @@ See the accompanying license.txt file for applicable licenses.
     </xsl:attribute-set>
 
     <xsl:attribute-set name="publisher">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="copyright">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="copyryear">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="copyrholder">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="critdates">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="created">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="revised">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="permissions">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="category">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="audience">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="keywords">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="prodinfo">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="prodname">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="vrmlist">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="vrm">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="brand">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="series">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="platform">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="prognum">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="featnum">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="component">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="othermeta">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="resourceid">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="reference">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="refbody" use-attribute-sets="body">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="refsyn">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="metadata">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="image__float">
@@ -747,6 +812,7 @@ See the accompanying license.txt file for applicable licenses.
     </xsl:attribute-set>
 
     <xsl:attribute-set name="image">
+        <!--<xsl:attribute name="align">left</xsl:attribute>-->
     </xsl:attribute-set>
 
     <xsl:attribute-set name="flag.image" use-attribute-sets="image">

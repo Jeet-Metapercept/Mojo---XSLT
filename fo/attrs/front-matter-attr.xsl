@@ -45,6 +45,7 @@ See the accompanying license.txt file for applicable licenses.
     </xsl:attribute-set>-->
 
 <!-- for cover image--> <xsl:attribute-set name="__coverImage">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
         <xsl:attribute name="position">absolute</xsl:attribute>
         <xsl:attribute name="top">-3.2cm</xsl:attribute>
         <!--<xsl:attribute name="right">10cm</xsl:attribute>-->
@@ -55,6 +56,7 @@ See the accompanying license.txt file for applicable licenses.
     </xsl:attribute-set>
 <!-- end -->
     <xsl:attribute-set name="__frontmatter">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
         <xsl:attribute name="text-align">left</xsl:attribute>
     </xsl:attribute-set>
 
@@ -85,6 +87,7 @@ See the accompanying license.txt file for applicable licenses.
     </xsl:attribute-set>
 
     <xsl:attribute-set name="__frontmatter__owner__container">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
         <xsl:attribute name="position">absolute</xsl:attribute>
         <xsl:attribute name="top">210mm</xsl:attribute>
         <xsl:attribute name="bottom">20mm</xsl:attribute>
@@ -102,10 +105,12 @@ See the accompanying license.txt file for applicable licenses.
     </xsl:attribute-set>
 
     <xsl:attribute-set name="__frontmatter__booklibrary">
+        <xsl:attribute name="font-family">FontMojo</xsl:attribute>
         <!--<xsl:attribute name=""></xsl:attribute>-->
     </xsl:attribute-set>
 
 	<xsl:attribute-set name="bookmap.summary">
+	    <xsl:attribute name="font-family">FontMojo</xsl:attribute>
 		<xsl:attribute name="font-size">9pt</xsl:attribute>
 	</xsl:attribute-set>
 

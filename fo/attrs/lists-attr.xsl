@@ -95,7 +95,7 @@ See the accompanying license.txt file for applicable licenses.
 
     <xsl:attribute-set name="ol.li__label__content">
         <xsl:attribute name="text-align">start</xsl:attribute>
-        <xsl:attribute name="font-weight">bold</xsl:attribute>
+                             <!--<xsl:attribute name="font-weight">bold</xsl:attribute>-->
     </xsl:attribute-set>
 
     <xsl:attribute-set name="ol.li__body">
