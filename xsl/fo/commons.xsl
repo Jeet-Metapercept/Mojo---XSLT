@@ -771,7 +771,7 @@ See the accompanying license.txt file for applicable licenses.
             <xsl:call-template name="insertVariable">
                 <xsl:with-param name="theVariableID" select="'Figure'"/>
                 <xsl:with-param name="theParameters">
-                    <number>
+                    <number>                    
                         <xsl:number level="any" count="*[contains(@class, ' topic/fig ')][child::*[contains(@class, ' topic/title ')]]" from="/"/>
                     </number>
                     <title>
