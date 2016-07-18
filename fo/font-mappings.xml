@@ -58,7 +58,7 @@ See the accompanying license.txt file for applicable licenses.
     
     <logical-font name="FontMojo">
       <physical-font char-set="default">
-        <font-face>Graphik, Futura, Raleway</font-face>
+        <font-face>Graphik, Raleway, Helvetica</font-face><!--, Futura, Raleway-->
       </physical-font>
     </logical-font>
 	<!--/-->

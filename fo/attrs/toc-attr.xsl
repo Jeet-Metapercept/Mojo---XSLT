@@ -132,7 +132,7 @@ See the accompanying license.txt file for applicable licenses.
     </xsl:attribute-set>
 
     <xsl:attribute-set name="__toc__leader">
-        <xsl:attribute name="leader-pattern">none</xsl:attribute>
+        <xsl:attribute name="leader-pattern">hidden</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="__toc__indent">

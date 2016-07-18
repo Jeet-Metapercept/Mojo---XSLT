@@ -113,7 +113,7 @@ See the accompanying license.txt file for applicable licenses.
 
   <xsl:attribute-set name="tgroup.tbody">
     <!--Table body-->
-    <xsl:attribute name="colspec-colnum-colname-colwidth">col2 2 3*</xsl:attribute>
+    <!-- <xsl:attribute name="colspec-colnum-colname-colwidth">col2 2 3*</xsl:attribute> -->
   </xsl:attribute-set>
 
   <xsl:attribute-set name="tgroup.thead">
@@ -179,44 +179,30 @@ See the accompanying license.txt file for applicable licenses.
 
   <xsl:attribute-set name="dl">
     <!--DL is a table-->
-    <xsl:attribute name="table-layout">auto</xsl:attribute>
-    <xsl:attribute name="border-style">solid</xsl:attribute>
-    <xsl:attribute name="border-color">red</xsl:attribute>
     <xsl:attribute name="width">100%</xsl:attribute>
     <xsl:attribute name="space-before">5pt</xsl:attribute>
     <xsl:attribute name="space-after">5pt</xsl:attribute>
   </xsl:attribute-set>
 
   <xsl:attribute-set name="dl__body">
-    <xsl:attribute name="width">100%</xsl:attribute>
   </xsl:attribute-set>
 
   <xsl:attribute-set name="dl.dlhead">
   </xsl:attribute-set>
 
   <xsl:attribute-set name="dlentry">
-
   </xsl:attribute-set>
 
   <xsl:attribute-set name="dlentry.dt">
-    <xsl:attribute name="width">65px</xsl:attribute>
     <xsl:attribute name="relative-align">baseline</xsl:attribute>
   </xsl:attribute-set>
 
   <xsl:attribute-set name="dlentry.dt__content" use-attribute-sets="common.table.body.entry common.table.head.entry">
   </xsl:attribute-set>
 
-  <xsl:attribute-set name="dlentry.dd">
-   
-  </xsl:attribute-set>
+  <xsl:attribute-set name="dlentry.dd"></xsl:attribute-set>
 
-  <xsl:attribute-set name="dlentry.dd__content">
-   <!-- <xsl:attribute name="border-style">solid</xsl:attribute>
-    <xsl:attribute name="border-color">red</xsl:attribute>-->
-    <xsl:attribute name="margin-left">6.7cm</xsl:attribute>
-   <!-- margin-right="8.0px" margin-left="8.0px"-->
-   <!-- <xsl:attribute name="margin-right">20px</xsl:attribute>
-    <xsl:attribute name="margin-left">20px</xsl:attribute>  -->   
+  <xsl:attribute-set name="dlentry.dd__content" use-attribute-sets="common.table.body.entry">
   </xsl:attribute-set>
 
   <xsl:attribute-set name="dl.dlhead__row">

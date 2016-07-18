@@ -37,7 +37,7 @@ See the accompanying license.txt file for applicable licenses.
 
 <!-- Custom Attributes -->
   <xsl:attribute-set name="__body__first__footer__block">
-        <!--<xsl:attribute name="space-before">5cm</xsl:attribute>-->
+        
     <xsl:attribute name="border-top-style">solid</xsl:attribute>
     <xsl:attribute name="border-top-width">3pt</xsl:attribute>
     <xsl:attribute name="border-color">#7E7E7E</xsl:attribute>
@@ -71,8 +71,6 @@ See the accompanying license.txt file for applicable licenses.
 
   <xsl:attribute-set name="odd__footer">
           <xsl:attribute name="text-align">start</xsl:attribute>
-		      <xsl:attribute name="space-before">10pt</xsl:attribute>
-
     <!--<xsl:attribute name="border-style">solid</xsl:attribute>
     <xsl:attribute name="border-color">red</xsl:attribute>-->
     <!--<xsl:attribute name="width">6cm</xsl:attribute>-->
@@ -83,8 +81,6 @@ See the accompanying license.txt file for applicable licenses.
   </xsl:attribute-set>
 
   <xsl:attribute-set name="even__footer">
-      <xsl:attribute name="space-before">10pt</xsl:attribute>
-
           <xsl:attribute name="text-align">start</xsl:attribute>
     <xsl:attribute name="start-indent">10pt</xsl:attribute>
     <xsl:attribute name="space-after">10pt</xsl:attribute>

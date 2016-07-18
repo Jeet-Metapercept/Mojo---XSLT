@@ -97,7 +97,7 @@ See the accompanying license.txt file for applicable licenses.
   </xsl:attribute-set>
 
   <xsl:attribute-set name="common.link">
-    <xsl:attribute name="color">blue</xsl:attribute>
+    <xsl:attribute name="color">#4F81BD</xsl:attribute>
     <xsl:attribute name="font-style">italic</xsl:attribute>
   </xsl:attribute-set>
 
