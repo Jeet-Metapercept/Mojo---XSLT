@@ -77,22 +77,20 @@
             </fo:table-cell>
         </fo:table-row>
     </xsl:template>
-<fo:block>
+
     <xsl:template match="*[contains(@class, ' topic/dt ')]">
-        <fo:inline xsl:use-attribute-sets="dlentry.dt__content">
+        <fo:block xsl:use-attribute-sets="dlentry.dt__content">
             <xsl:call-template name="commonattributes"/>
             <xsl:apply-templates/>
-        </fo:inline>
-            
+        </fo:block>
     </xsl:template>
 
     <xsl:template match="*[contains(@class, ' topic/dd ')]">
-         <fo:inline xsl:use-attribute-sets="dlentry.dd__content">
+        <fo:block xsl:use-attribute-sets="dlentry.dd__content">
             <xsl:call-template name="commonattributes"/>
             <xsl:apply-templates/>
-        </fo:inline>
+        </fo:block>
     </xsl:template>
-</fo:block>
 
     <!--  Map processing  -->
     <xsl:template match="*[contains(@class, ' map/map ')]/*[contains(@class, ' map/reltable ')]">
@@ -147,15 +145,6 @@
         </fo:table-cell>
     </xsl:template>
 
-    <!-- DITA-OT flagging preprocess may add flag info directly into simpletable; account for that and
-         skip to next row. Currently known to match ditaval-startprop when flagging used on simpletable
-         as well as suitesol:changebar-start when revision bar used on sthead or stentry. -->
-    <xsl:template match="*" mode="count-max-simpletable-cells">
-      <xsl:param name="maxcount" select="0" as="xs:integer"/>
-      <xsl:apply-templates select="following-sibling::*[1]" mode="count-max-simpletable-cells">
-        <xsl:with-param name="maxcount" select="$maxcount"/>
-      </xsl:apply-templates>
-    </xsl:template>
     <!-- SourceForge bug tracker item 2872988:
          Count the max number of cells in any row of a simpletable -->
     <xsl:template match="*[contains(@class, ' topic/sthead ')] | *[contains(@class, ' topic/strow ')]" mode="count-max-simpletable-cells">

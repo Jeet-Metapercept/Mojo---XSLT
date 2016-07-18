@@ -40,9 +40,8 @@ See the accompanying license.txt file for applicable licenses.
     xmlns:exslf="http://exslt.org/functions"
     xmlns:opentopic-func="http://www.idiominc.com/opentopic/exsl/function"
     xmlns:dita2xslfo="http://dita-ot.sourceforge.net/ns/200910/dita2xslfo"
-    xmlns:ot-placeholder="http://suite-sol.com/namespaces/ot-placeholder"
-    extension-element-prefixes="exsl"    
-    exclude-result-prefixes="ot-placeholder opentopic exsl opentopic-index exslf opentopic-func dita2xslfo xs"
+    extension-element-prefixes="exsl"
+    exclude-result-prefixes="opentopic exsl opentopic-index exslf opentopic-func dita2xslfo xs"
     version="2.0">
 
     <xsl:key name="id" match="*[@id]" use="@id"/>
@@ -157,9 +156,8 @@ See the accompanying license.txt file for applicable licenses.
                     </xsl:choose>
                 </xsl:variable>
                 <xsl:choose>
-                    <xsl:when test="not(ancestor::*[contains(@class,' topic/topic ')]) and not(ancestor::ot-placeholder:glossarylist)">
+                    <xsl:when test="not(ancestor::*[contains(@class,' topic/topic ')])">
                         <fo:page-sequence master-reference="{$page-sequence-reference}" xsl:use-attribute-sets="__force__page__count">
-                            <xsl:call-template name="startPageNumbering"/>
                             <xsl:call-template name="insertBodyStaticContents"/>
                             <fo:flow flow-name="xsl-region-body">
                                 <xsl:choose>
@@ -181,6 +179,8 @@ See the accompanying license.txt file for applicable licenses.
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:when>
+      <!--BS: skipp abstract (copyright) from usual content. It will be processed from the front-matter-->
+      <xsl:when test="$topicType = 'topicAbstract'"/>
       <xsl:otherwise>
                 <xsl:apply-templates select="." mode="processUnknowTopic">
                     <xsl:with-param name="topicType" select="$topicType"/>
@@ -217,12 +217,14 @@ See the accompanying license.txt file for applicable licenses.
                         <xsl:with-param name="type" select="'chapter'"/>
                     </xsl:call-template>
 
+					<!--custom edit-->
                     <fo:block xsl:use-attribute-sets="topic.title.hide">
                         <xsl:call-template name="pullPrologIndexTerms"/>
                         <xsl:for-each select="child::*[contains(@class,' topic/title ')]">
                             <xsl:apply-templates select="." mode="getTitle"/>
                         </xsl:for-each>
                     </fo:block>
+					<!--end-->
 
                     <xsl:choose>
                       <xsl:when test="$chapterLayout='BASIC'">
@@ -236,7 +238,6 @@ See the accompanying license.txt file for applicable licenses.
                     </xsl:choose>
 
                     <xsl:apply-templates select="*[contains(@class,' topic/topic ')]"/>
-                    <xsl:call-template name="pullPrologIndexTerms.end-range"/>
                 </fo:block>
             </fo:flow>
         </fo:page-sequence>
@@ -245,7 +246,6 @@ See the accompanying license.txt file for applicable licenses.
     <!--  Bookmap Appendix processing  -->
     <xsl:template name="processTopicAppendix">
         <fo:page-sequence master-reference="body-sequence" xsl:use-attribute-sets="__force__page__count">
-            <xsl:call-template name="startPageNumbering"/>
             <xsl:call-template name="insertBodyStaticContents"/>
             <fo:flow flow-name="xsl-region-body">
                 <fo:block xsl:use-attribute-sets="topic">
@@ -292,7 +292,6 @@ See the accompanying license.txt file for applicable licenses.
                     </xsl:choose>
 
                     <xsl:apply-templates select="*[contains(@class,' topic/topic ')]"/>
-                    <xsl:call-template name="pullPrologIndexTerms.end-range"/>
                 </fo:block>
             </fo:flow>
         </fo:page-sequence>
@@ -349,7 +348,6 @@ See the accompanying license.txt file for applicable licenses.
               <xsl:apply-templates select="."/>
             </xsl:if>
           </xsl:for-each>
-          <xsl:call-template name="pullPrologIndexTerms.end-range"/>
         </fo:block>
       </fo:flow>
     </fo:page-sequence>
@@ -416,7 +414,6 @@ See the accompanying license.txt file for applicable licenses.
                             <xsl:apply-templates select="."/>
                         </xsl:if>
                     </xsl:for-each>
-                    <xsl:call-template name="pullPrologIndexTerms.end-range"/>
                 </fo:block>
             </fo:flow>
         </fo:page-sequence>
@@ -432,7 +429,6 @@ See the accompanying license.txt file for applicable licenses.
 
     <xsl:template name="processTopicNotices">
         <fo:page-sequence master-reference="body-sequence" xsl:use-attribute-sets="__force__page__count">
-            <xsl:call-template name="startPageNumbering"/>
             <xsl:call-template name="insertBodyStaticContents"/>
             <fo:flow flow-name="xsl-region-body">
                 <fo:block xsl:use-attribute-sets="topic">
@@ -473,7 +469,6 @@ See the accompanying license.txt file for applicable licenses.
                     </xsl:choose>
 
                     <xsl:apply-templates select="*[contains(@class,' topic/topic ')]"/>
-                    <xsl:call-template name="pullPrologIndexTerms.end-range"/>
                 </fo:block>
             </fo:flow>
         </fo:page-sequence>
@@ -715,12 +710,7 @@ See the accompanying license.txt file for applicable licenses.
   <xsl:template match="*" mode="get-topic-level" as="xs:integer">
     <xsl:variable name="topicref" select="key('map-id', ancestor-or-self::*[contains(@class,' topic/topic ')][1]/@id)"/>
     <xsl:sequence select="count(ancestor-or-self::*[contains(@class,' topic/topic ')]) -
-                          count($topicref/ancestor-or-self::*[(contains(@class,' bookmap/part ') and
-                                                               ((exists(@navtitle) or
-                                                                 *[contains(@class,' map/topicmeta ')]/*[contains(@class,' topic/navtitle ')]) or
-                                                                (exists(@href) and
-                                                                 (empty(@format) or @format eq 'dita') and
-                                                                 (empty(@scope) or @scope eq 'local')))) or
+                          count($topicref/ancestor-or-self::*[contains(@class,' bookmap/part ') or
                                                               (contains(@class,' bookmap/appendices ') and
                                                                exists(@href) and
                                                                (empty(@format) or @format eq 'dita') and
@@ -759,19 +749,11 @@ See the accompanying license.txt file for applicable licenses.
 
     <xsl:template match="*[contains(@class,' topic/fig ')]/*[contains(@class,' topic/title ')]">
         <fo:block xsl:use-attribute-sets="fig.title">
-          <xsl:call-template name="commonattributes"/>
-          <!-- OXYGEN PATCH START  EXM-18109 -->
-          <!--<xsl:if test="following-sibling::*[contains(@class,' topic/image ')][@placement='break']">
-              <xsl:attribute name="text-align" 
-                  select="if (empty(following-sibling::*[contains(@class,' topic/image ')]/@align)) then 'center' 
-                              else following-sibling::*[contains(@class,' topic/image ')]/@align"/>
-          </xsl:if>-->
-          <!-- OXYGEN PATCH END  EXM-18109 -->
-          
+            <xsl:call-template name="commonattributes"/>
             <xsl:call-template name="insertVariable">
                 <xsl:with-param name="theVariableID" select="'Figure'"/>
                 <xsl:with-param name="theParameters">
-                    <number>                    
+                    <number>
                         <xsl:number level="any" count="*[contains(@class, ' topic/fig ')][child::*[contains(@class, ' topic/title ')]]" from="/"/>
                     </number>
                     <title>
@@ -1102,6 +1084,7 @@ See the accompanying license.txt file for applicable licenses.
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:when>
+      <xsl:when test="$topicType = 'topicAbstract'"/>
       <xsl:otherwise>
                 <xsl:call-template name="processUnknowTopic">
                     <xsl:with-param name="topicType" select="$topicType"/>
@@ -1147,15 +1130,20 @@ See the accompanying license.txt file for applicable licenses.
 
     <!-- Gets navigation title of current topic, used for bookmarks/TOC -->
     <xsl:template name="getNavTitle">
-        <xsl:variable name="topicref" select="key('map-id', @id)[1]"/>
+        <!-- topicNumber = the # of times this topic has appeared. When topicNumber=3,
+             this copy of the topic is based on its third appearance in the map. -->
+        <xsl:param name="topicNumber" select="number('NaN')"/>
+        <xsl:variable name="topicref" select="key('map-id', @id)"/>
+        <!-- FIXME: Deprecated as merging does not generate duplicate IDs. To be removed in future release. -->
+        <xsl:variable name="numTopicref" select="$topicref[position()=$topicNumber]"/>
         <xsl:choose>
-            <xsl:when test="$topicref/@locktitle='yes' and
-                            $topicref/*[contains(@class, ' map/topicmeta ')]/*[contains(@class, ' topic/navtitle ')]">
-               <xsl:apply-templates select="$topicref/*[contains(@class, ' map/topicmeta ')]/*[contains(@class, ' topic/navtitle ')]/node()"/>
+            <xsl:when test="$numTopicref/@locktitle='yes' and
+                            $numTopicref/*[contains(@class, ' map/topicmeta ')]/*[contains(@class, ' topic/navtitle ')]">
+               <xsl:apply-templates select="$numTopicref/*[contains(@class, ' map/topicmeta ')]/*[contains(@class, ' topic/navtitle ')]/node()"/>
             </xsl:when>
-            <xsl:when test="$topicref/@locktitle='yes' and
-                            $topicref/@navtitle">
-                <xsl:value-of select="$topicref/@navtitle"/>
+            <xsl:when test="$numTopicref/@locktitle='yes' and
+                            $numTopicref/@navtitle">
+                <xsl:value-of select="$numTopicref/@navtitle"/>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:apply-templates select="*[contains(@class,' topic/title ')]" mode="getTitle"/>
@@ -1422,29 +1410,8 @@ See the accompanying license.txt file for applicable licenses.
     <!--/xsl:template-->
 
     <xsl:template name="pullPrologIndexTerms">
-      <!-- index terms and ranges from topic -->
         <xsl:apply-templates select="ancestor-or-self::*[contains(@class, ' topic/topic ')][1]/*[contains(@class, ' topic/prolog ')]
-            //opentopic-index:index.entry[not(parent::opentopic-index:index.entry) and not(@end-range = 'true')]"/>
-      <!-- index ranges from map -->
-      <xsl:variable name="topicref" select="key('map-id', @id)"/>
-      <xsl:apply-templates select="$topicref/
-                                     *[contains(@class, ' map/topicmeta ')]/
-                                       *[contains(@class, ' topic/keywords ')]/
-                                         descendant::opentopic-index:index.entry[@start-range = 'true']"/>
-    </xsl:template>
-  
-    <xsl:template name="pullPrologIndexTerms.end-range">
-      <!-- index ranges from topic -->
-        <xsl:apply-templates select="ancestor-or-self::*[contains(@class, ' topic/topic ')][1]/
-                                       *[contains(@class, ' topic/prolog ')]/
-                                         descendant::opentopic-index:index.entry[not(parent::opentopic-index:index.entry) and
-                                                                                 @end-range = 'true']"/>
-      <!-- index ranges from map -->
-      <xsl:variable name="topicref" select="key('map-id', @id)"/>
-      <xsl:apply-templates select="$topicref/
-                                     *[contains(@class, ' map/topicmeta ')]/
-                                       *[contains(@class, ' topic/keywords ')]/
-                                         descendant::opentopic-index:index.entry[@end-range = 'true']"/>
+            //opentopic-index:index.entry[not(parent::opentopic-index:index.entry)]"/>
     </xsl:template>
 
     <xsl:template match="*[contains(@class, ' topic/metadata ')]">
@@ -1569,28 +1536,24 @@ See the accompanying license.txt file for applicable licenses.
         </fo:block>
     </xsl:template>
 
-    <xsl:template match="*[contains(@class,' topic/note ')]" mode="setNoteImagePath">
-      <xsl:variable name="noteType">
-          <xsl:choose>
-              <!--<xsl:when test="@type = 'other' and @othertype">
-                  <xsl:value-of select="@othertype"/>
-              </xsl:when>-->
-              <xsl:when test="@type">
-                  <xsl:value-of select="@type"/>
-              </xsl:when>
-              <xsl:otherwise>
-                  <xsl:value-of select="'note'"/>
-              </xsl:otherwise>
-          </xsl:choose>
-      </xsl:variable>
-      <xsl:call-template name="insertVariable">
-          <xsl:with-param name="theVariableID" select="concat($noteType, ' Note Image Path')"/>
-      </xsl:call-template>
-    </xsl:template>
-
     <xsl:template match="*[contains(@class,' topic/note ')]">
+        <xsl:variable name="noteType">
+            <xsl:choose>
+                <xsl:when test="@type = 'other' and @othertype">
+                    <xsl:value-of select="@othertype"/>
+                </xsl:when>
+                <xsl:when test="@type">
+                    <xsl:value-of select="@type"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="'note'"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
         <xsl:variable name="noteImagePath">
-            <xsl:apply-templates select="." mode="setNoteImagePath"/>
+            <xsl:call-template name="insertVariable">
+                <xsl:with-param name="theVariableID" select="concat($noteType, ' Note Image Path')"/>
+            </xsl:call-template>
         </xsl:variable>
         <xsl:choose>
             <xsl:when test="not($noteImagePath = '')">
@@ -1642,7 +1605,6 @@ See the accompanying license.txt file for applicable licenses.
                     <fo:basic-link>
                         <xsl:call-template name="buildBasicLinkDestination">
                             <xsl:with-param name="scope" select="@scope"/>
-                            <xsl:with-param name="format" select="@format"/>
                             <xsl:with-param name="href" select="@href"/>
                         </xsl:call-template>
 
@@ -1884,14 +1846,13 @@ See the accompanying license.txt file for applicable licenses.
         </xsl:choose>
 
         <xsl:choose>
-            <xsl:when test="empty(@href)"/>
             <xsl:when test="not(@placement = 'inline')">
 <!--                <fo:float xsl:use-attribute-sets="image__float">-->
                     <fo:block xsl:use-attribute-sets="image__block">
                         <xsl:call-template name="commonattributes"/>
                         <xsl:apply-templates select="." mode="placeImage">
                             <xsl:with-param name="imageAlign" select="@align"/>
-                            <xsl:with-param name="href" select="if (@scope = 'external' or opentopic-func:isAbsolute(@href)) then @href else concat($input.dir.url, @href)"/>
+                            <xsl:with-param name="href" select="if (@scope = 'external') then @href else concat($input.dir.url, @href)"/>
                             <xsl:with-param name="height" select="@height"/>
                             <xsl:with-param name="width" select="@width"/>
                         </xsl:apply-templates>
@@ -1900,15 +1861,10 @@ See the accompanying license.txt file for applicable licenses.
             </xsl:when>
             <xsl:otherwise>
                 <fo:inline xsl:use-attribute-sets="image__inline">
-                  <!-- OXYGEN PATCH START - EXM-18138 -->
-                  <xsl:if test="parent::*[contains(@class,' ui-d/uicontrol ')]">
-                    <xsl:attribute name="space-end.minimum">5pt</xsl:attribute>
-                  </xsl:if>
-                  <!-- OXYGEN PATCH END - EXM-18138 -->
                     <xsl:call-template name="commonattributes"/>
                     <xsl:apply-templates select="." mode="placeImage">
                         <xsl:with-param name="imageAlign" select="@align"/>
-                        <xsl:with-param name="href" select="if (@scope = 'external' or opentopic-func:isAbsolute(@href)) then @href else concat($input.dir.url, @href)"/>
+                        <xsl:with-param name="href" select="if (@scope = 'external') then @href else concat($input.dir.url, @href)"/>
                         <xsl:with-param name="height" select="@height"/>
                         <xsl:with-param name="width" select="@width"/>
                     </xsl:apply-templates>
@@ -1929,146 +1885,29 @@ See the accompanying license.txt file for applicable licenses.
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-  
-  <!-- Test whether URI is absolute -->
-  <xsl:function name="opentopic-func:isAbsolute" as="xs:boolean">
-    <xsl:param name="uri" as="xs:anyURI"/>
-    <xsl:sequence select="some $prefix in ('/', 'file:') satisfies starts-with($uri, $prefix) or
-                          contains($uri, '://')"/>
-  </xsl:function>
 
     <xsl:template match="*" mode="placeImage">
         <xsl:param name="imageAlign"/>
         <xsl:param name="href"/>
         <xsl:param name="height"/>
         <xsl:param name="width"/>
-            <!--Custom add-->
-                <xsl:choose>
-                    <xsl:when test="not(@align)">
-                        <xsl:call-template name="processAttrSetReflection">
-                            <xsl:with-param name="attrSet" select="concat('__align__', 'center')"/>
-                            <xsl:with-param name="path" select="'../../cfg/fo/attrs/commons-attr.xsl'"/>
-                        </xsl:call-template>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:call-template name="processAttrSetReflection">
-                            <xsl:with-param name="attrSet" select="concat('__align__', $imageAlign)"/>
-                            <xsl:with-param name="path" select="'../../cfg/fo/attrs/commons-attr.xsl'"/>
-                        </xsl:call-template>
-                    </xsl:otherwise>
-                </xsl:choose>
-            <!--/-->
 <!--Using align attribute set according to image @align attribute-->
-        <!--<xsl:call-template name="processAttrSetReflection">
+        <xsl:call-template name="processAttrSetReflection">
                 <xsl:with-param name="attrSet" select="concat('__align__', $imageAlign)"/>
                 <xsl:with-param name="path" select="'../../cfg/fo/attrs/commons-attr.xsl'"/>
-            </xsl:call-template>-->
-        <!--Custom add-->
-        <xsl:choose>
-                <xsl:when test="@placement='break'">
-                    <fo:external-graphic src="url({$href})" xsl:use-attribute-sets="image__block">
-                        <!--Setting image height if defined-->
-                        <xsl:if test="$height">
-                            <xsl:attribute name="content-height">
-                                <!--The following test was commented out because most people found the behavior
-                 surprising.  It used to force images with a number specified for the dimensions
-                 *but no units* to act as a measure of pixels, *if* you were printing at 72 DPI.
-                 Uncomment if you really want it. -->
-                                <xsl:choose>
-                                    <!--xsl:when test="not(string(number($height)) = 'NaN')">
-                        <xsl:value-of select="concat($height div 72,'in')"/>
-                      </xsl:when-->
-                                    <xsl:when test="not(string(number($height)) = 'NaN')">
-                                        <xsl:value-of select="concat($height, 'px')"/>
-                                    </xsl:when>
-                                    <xsl:otherwise>
-                                        <xsl:value-of select="$height"/>
-                                    </xsl:otherwise>
-                                </xsl:choose>
-                            </xsl:attribute>
-                        </xsl:if>
-                        <!--Setting image width if defined-->
-                        <xsl:if test="$width">
-                            <xsl:attribute name="content-width">
-                                <xsl:choose>
-                                    <!--xsl:when test="not(string(number($width)) = 'NaN')">
-                        <xsl:value-of select="concat($width div 72,'in')"/>
-                      </xsl:when-->
-                                    <xsl:when test="not(string(number($width)) = 'NaN')">
-                                        <xsl:value-of select="concat($width, 'px')"/>
-                                    </xsl:when>
-                                    <xsl:otherwise>
-                                        <xsl:value-of select="$width"/>
-                                    </xsl:otherwise>
-                                </xsl:choose>
-                            </xsl:attribute>
-                        </xsl:if>
-                        <xsl:if test="not($width) and not($height) and @scale">
-                            <xsl:attribute name="content-width">
-                                <xsl:value-of select="concat(@scale,'%')"/>
-                            </xsl:attribute>
-                        </xsl:if>
-                    </fo:external-graphic>
-                </xsl:when>
-                <xsl:otherwise>
-                    <fo:external-graphic src="url({$href})" xsl:use-attribute-sets="image__inline">
-                        <!--Setting image height if defined-->
-                        <xsl:if test="$height">
-                            <xsl:attribute name="content-height">
-                                <!--The following test was commented out because most people found the behavior
-                 surprising.  It used to force images with a number specified for the dimensions
-                 *but no units* to act as a measure of pixels, *if* you were printing at 72 DPI.
-                 Uncomment if you really want it. -->
-                                <xsl:choose>
-                                    <!--xsl:when test="not(string(number($height)) = 'NaN')">
-                        <xsl:value-of select="concat($height div 72,'in')"/>
-                      </xsl:when-->
-                                    <xsl:when test="not(string(number($height)) = 'NaN')">
-                                        <xsl:value-of select="concat($height, 'px')"/>
-                                    </xsl:when>
-                                    <xsl:otherwise>
-                                        <xsl:value-of select="$height"/>
-                                    </xsl:otherwise>
-                                </xsl:choose>
-                            </xsl:attribute>
-                        </xsl:if>
-                        <!--Setting image width if defined-->
-                        <xsl:if test="$width">
-                            <xsl:attribute name="content-width">
-                                <xsl:choose>
-                                    <!--xsl:when test="not(string(number($width)) = 'NaN')">
-                        <xsl:value-of select="concat($width div 72,'in')"/>
-                      </xsl:when-->
-                                    <xsl:when test="not(string(number($width)) = 'NaN')">
-                                        <xsl:value-of select="concat($width, 'px')"/>
-                                    </xsl:when>
-                                    <xsl:otherwise>
-                                        <xsl:value-of select="$width"/>
-                                    </xsl:otherwise>
-                                </xsl:choose>
-                            </xsl:attribute>
-                        </xsl:if>
-                        <xsl:if test="not($width) and not($height) and @scale">
-                            <xsl:attribute name="content-width">
-                                <xsl:value-of select="concat(@scale,'%')"/>
-                            </xsl:attribute>
-                        </xsl:if>
-                    </fo:external-graphic>
-                </xsl:otherwise>
-        </xsl:choose>
-        <!--/-->
-<!--        <fo:external-graphic src="url({$href})" xsl:use-attribute-sets="image">
-            <!-\-Setting image height if defined-\->
+            </xsl:call-template>
+        <fo:external-graphic src="url({$href})" xsl:use-attribute-sets="image">
+            <!--Setting image height if defined-->
             <xsl:if test="$height">
                 <xsl:attribute name="content-height">
-                <!-\-The following test was commented out because most people found the behavior
+                <!--The following test was commented out because most people found the behavior
                  surprising.  It used to force images with a number specified for the dimensions
                  *but no units* to act as a measure of pixels, *if* you were printing at 72 DPI.
-                 Uncomment if you really want it. -\->
+                 Uncomment if you really want it. -->
                     <xsl:choose>
-                      <!-\-xsl:when test="not(string(number($height)) = 'NaN')">
+                      <!--xsl:when test="not(string(number($height)) = 'NaN')">
                         <xsl:value-of select="concat($height div 72,'in')"/>
-                      </xsl:when-\->
+                      </xsl:when-->
                       <xsl:when test="not(string(number($height)) = 'NaN')">
                         <xsl:value-of select="concat($height, 'px')"/>
                       </xsl:when>
@@ -2078,13 +1917,13 @@ See the accompanying license.txt file for applicable licenses.
                     </xsl:choose>
                 </xsl:attribute>
             </xsl:if>
-            <!-\-Setting image width if defined-\->
+            <!--Setting image width if defined-->
             <xsl:if test="$width">
                 <xsl:attribute name="content-width">
                     <xsl:choose>
-                      <!-\-xsl:when test="not(string(number($width)) = 'NaN')">
+                      <!--xsl:when test="not(string(number($width)) = 'NaN')">
                         <xsl:value-of select="concat($width div 72,'in')"/>
-                      </xsl:when-\->
+                      </xsl:when-->
                       <xsl:when test="not(string(number($width)) = 'NaN')">
                         <xsl:value-of select="concat($width, 'px')"/>
                       </xsl:when>
@@ -2099,7 +1938,7 @@ See the accompanying license.txt file for applicable licenses.
                     <xsl:value-of select="concat(@scale,'%')"/>
                 </xsl:attribute>
             </xsl:if>
-        </fo:external-graphic>-->
+        </fo:external-graphic>
     </xsl:template>
 
 
@@ -2254,6 +2093,46 @@ See the accompanying license.txt file for applicable licenses.
 
     <xsl:template match="@platform | @product | @audience | @otherprops | @importance | @rev | @status"/>
 
+    <!--  Layout masters  -->
+
+    <!-- Deprecated -->
+    <xsl:template match="*" mode="layout-masters-processing">
+        <xsl:call-template name="output-message">
+            <xsl:with-param name="msgcat">DOTX</xsl:with-param>
+            <xsl:with-param name="msgnum">066</xsl:with-param>
+            <xsl:with-param name="msgsev">W</xsl:with-param>
+            <xsl:with-param name="msgparams">%1=layout-masters-processing</xsl:with-param>
+        </xsl:call-template>
+        <xsl:element name="{name()}">
+            <xsl:apply-templates select="@*" mode="layout-masters-processing"/>
+            <xsl:apply-templates select="*" mode="layout-masters-processing"/>
+        </xsl:element>
+    </xsl:template>
+
+    <!-- Deprecated -->
+    <xsl:template match="@*" mode="layout-masters-processing">
+        <xsl:call-template name="output-message">
+            <xsl:with-param name="msgcat">DOTX</xsl:with-param>
+            <xsl:with-param name="msgnum">066</xsl:with-param>
+            <xsl:with-param name="msgsev">W</xsl:with-param>
+            <xsl:with-param name="msgparams">%1=layout-masters-processing</xsl:with-param>
+        </xsl:call-template>
+        <xsl:copy-of select="."/>
+    </xsl:template>
+
+    <!-- Deprecated -->
+    <xsl:template match="@background-image" mode="layout-masters-processing">
+        <xsl:call-template name="output-message">
+            <xsl:with-param name="msgcat">DOTX</xsl:with-param>
+            <xsl:with-param name="msgnum">066</xsl:with-param>
+            <xsl:with-param name="msgsev">W</xsl:with-param>
+            <xsl:with-param name="msgparams">%1=layout-masters-processing</xsl:with-param>
+        </xsl:call-template>
+        <xsl:attribute name="background-image">
+            <xsl:value-of select="concat('url(',$artworkPrefix,substring-after(.,'artwork:'),')')"/>
+        </xsl:attribute>
+    </xsl:template>
+
     <!-- Template to copy original IDs -->
 
     <xsl:template match="@id">
@@ -2378,7 +2257,6 @@ See the accompanying license.txt file for applicable licenses.
                         </xsl:variable>
 
                         <fo:page-sequence master-reference="{$page-sequence-reference}" xsl:use-attribute-sets="__force__page__count">
-                            <xsl:call-template name="startPageNumbering"/>
                             <xsl:call-template name="insertBodyStaticContents"/>
                             <fo:flow flow-name="xsl-region-body">
                                 <xsl:apply-templates select="." mode="processTopic"/>
